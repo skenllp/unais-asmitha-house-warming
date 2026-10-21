@@ -1,37 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ==========================================
-     AUDIO — commented out
-  ==========================================
+     AUDIO — floating music FAB
+  ========================================== */
   const bgAudio = document.getElementById('bg-audio');
   const audioToggle = document.getElementById('audio-toggle');
-  const audioIcon = document.getElementById('audio-icon');
 
-  const ICON_MUTED = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.09-.09L2.81 5.09 6.82 9H4v6h4l5 5v-6.83l4.88 4.88c-.62.47-1.31.85-2.08 1.09v2.01c1.3-.3 2.49-.93 3.47-1.76l2.62 2.62 1.41-1.41L4.82 2.81 3.91 3.91zM12 15.17L9.83 13H8v-2h1.83l.26-.26 1.91 1.91v2.52z"/>`;
-  const ICON_PLAYING = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
-
-  function setAudioIcon(playing) {
-    if (!audioIcon) return;
-    audioIcon.innerHTML = playing ? ICON_PLAYING : ICON_MUTED;
-    if (audioToggle) {
-      audioToggle.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
-      audioToggle.setAttribute('title', playing ? 'Pause background music' : 'Play background music');
-    }
+  function setAudioPlaying(playing) {
+    if (!audioToggle) return;
+    audioToggle.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
+    audioToggle.setAttribute('title', playing ? 'Pause background music' : 'Play background music');
+    audioToggle.classList.toggle('is-playing', playing);
   }
 
   if (audioToggle && bgAudio) {
     audioToggle.addEventListener('click', () => {
       if (bgAudio.paused) {
-        bgAudio.play().then(() => setAudioIcon(true)).catch(() => {});
+        bgAudio.play().then(() => setAudioPlaying(true)).catch(() => {});
       } else {
         bgAudio.pause();
-        setAudioIcon(false);
+        setAudioPlaying(false);
       }
     });
-    bgAudio.addEventListener('pause', () => setAudioIcon(false));
-    bgAudio.addEventListener('play', () => setAudioIcon(true));
+    bgAudio.addEventListener('pause', () => setAudioPlaying(false));
+    bgAudio.addEventListener('play', () => setAudioPlaying(true));
   }
-  ==========================================*/
+
 
   /* ==========================================
      0. INTRO SEQUENCE — loader -> opening doors (wait for tap) -> hero
@@ -66,12 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     opening.removeEventListener('click', openDoors);
     opening.removeEventListener('keydown', onOpeningKey);
 
-    // Music disabled
-    // if (bgAudio) {
-    //   bgAudio.play()
-    //     .then(() => setAudioIcon(true))
-    //     .catch(() => { /* autoplay blocked */ });
-    // }
+    // Auto-play music when doors open
+    if (bgAudio) {
+      bgAudio.play()
+        .then(() => setAudioPlaying(true))
+        .catch(() => { /* autoplay blocked — user can tap FAB */ });
+    }
 
     window.setTimeout(finishIntro, prefersReducedMotion ? 0 : 1150);
   }

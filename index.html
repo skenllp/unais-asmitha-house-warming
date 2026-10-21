@@ -77,16 +77,6 @@
       <li><a href="#location" class="nav-link">Location</a></li>
     </ul>
     <div class="nav-utility">
-      <!-- MUSIC DISABLED
-      <button class="audio-toggle" id="audio-toggle" type="button" title="Play background music" aria-label="Play background music">
-        <svg id="audio-icon" viewBox="0 0 24 24" width="16" height="16">
-          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 4L9.91 6.09 12 8.18V4zm-8.09-.09L2.81 5.09 6.82 9H4v6h4l5 5v-6.83l4.88 4.88c-.62.47-1.31.85-2.08 1.09v2.01c1.3-.3 2.49-.93 3.47-1.76l2.62 2.62 1.41-1.41L4.82 2.81 3.91 3.91zM12 15.17L9.83 13H8v-2h1.83l.26-.26 1.91 1.91v2.52z"/>
-        </svg>
-        <audio id="bg-audio" loop preload="none">
-          <source src="assets/music.mp3" type="audio/mpeg">
-        </audio>
-      </button>
-      -->
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -226,6 +216,16 @@
     <p class="footer-bottom">&copy; 2026 Housewarming Ceremony.</p>
   </div>
 </footer>
+
+<!-- FLOATING MUSIC TOGGLE -->
+<button class="music-fab" id="audio-toggle" type="button" title="Play background music" aria-label="Play background music">
+  <span class="music-fab-bars" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </span>
+  <audio id="bg-audio" loop preload="auto">
+    <source src="assets/song.mp3" type="audio/mpeg">
+  </audio>
+</button>
 
 <script src="js/script.js" defer></script>
 </body>
